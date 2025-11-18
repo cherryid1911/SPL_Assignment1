@@ -14,10 +14,11 @@ Playlist::~Playlist() {
         while(curr!=nullptr){
             PlaylistNode* next= curr->next;
             delete curr;
-            next=curr;
+            curr=next;
         }
-        delete head;
     }
+    head=nullptr;
+    track_count = 0;
     #ifdef DEBUG
     std::cout << "Destroying playlist: " << playlist_name << std::endl;
     #endif
