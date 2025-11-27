@@ -49,6 +49,10 @@ public:
      */
     std::vector<std::string> getTrackTitles() const;
 
+    //my changes - destructor
+
+    ~DJLibraryService();
+
 private:
     Playlist playlist;
     std::vector<AudioTrack*> library;  // Library of all tracks (owned)
