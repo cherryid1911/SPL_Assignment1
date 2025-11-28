@@ -23,6 +23,7 @@ Playlist::~Playlist() {
     std::cout << "Destroying playlist: " << playlist_name << std::endl;
     #endif
 }
+    
 
 void Playlist::add_track(AudioTrack* track) {
     if (!track) {
@@ -137,4 +138,9 @@ std::vector<AudioTrack*> Playlist::getTracks() const {
         current = current->next;
     }
     return tracks;
+}
+
+// Destructor
+PlaylistNode::~PlaylistNode(){
+    delete track;
 }
