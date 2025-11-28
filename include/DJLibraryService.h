@@ -14,7 +14,8 @@
 class DJLibraryService {
 public:
     DJLibraryService(const Playlist& playlist);
-    DJLibraryService() = default;
+    DJLibraryService(): playlist(), library(){}
+
 
     /**
      * @brief Build the track library from parsed config data
@@ -48,6 +49,10 @@ public:
      * @return A vector of strings containing the track titles.
      */
     std::vector<std::string> getTrackTitles() const;
+
+    //my changes - destructor
+
+    ~DJLibraryService();
 
 private:
     Playlist playlist;
