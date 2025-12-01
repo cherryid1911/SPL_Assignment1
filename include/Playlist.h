@@ -41,10 +41,10 @@ public:
     ~Playlist();
 
     // Copy constructor (not in skeleton)
-    Playlist(const Playlist& other)=delete;
+    Playlist(const Playlist& other);
 
     // Copy assignment operator (not in skeleton)
-    Playlist& operator=(const Playlist& other)=delete;
+    Playlist& operator=(const Playlist& other);
 
     /**
      * Add a track to the playlist
