@@ -176,8 +176,15 @@ void DJSession::simulate_dj_performance() {
             const auto& indices = session_config.playlists.at(name);
             library_service.loadPlaylistFromIndices(name, indices);
             std::vector<std::string> track_titles = library_service.getTrackTitles();
-            for (const std::string& track : track_titles)
+
+            for (const std::string& track : track_titles){
+                std::cout << "\n-- Processing: '" << track << "' --\n";
+                stats.tracks_processed++;
                 load_track_to_controller(track);
+                
+                if (!load_track_to_mixer_deck(track))
+                    continue;
+                }
         }
     }
     // part b
@@ -191,6 +198,7 @@ void DJSession::simulate_dj_performance() {
 
          if (!load_playlist(playlist)) {
             std::cerr << "[ERROR] Playlist, couldn't load for dj preformenc :'" << playlist << "'.\n";
+            stats.errors++;
             continue;
          }
          
