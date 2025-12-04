@@ -16,6 +16,12 @@ public:
     DJLibraryService(const Playlist& playlist);
     DJLibraryService(): playlist(), library(){}
 
+    // Copy ctor - deleted
+    DJLibraryService(const DJLibraryService&) = delete;
+
+    // Copy assignment operator - deleted
+    DJLibraryService& operator=(const DJLibraryService&) = delete;
+
 
     /**
      * @brief Build the track library from parsed config data

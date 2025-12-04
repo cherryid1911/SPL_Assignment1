@@ -36,15 +36,18 @@ MixingEngineService::~MixingEngineService() {
  */
 int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     std::cout<<"\n=== Loading Track to Deck ===";
-    PointerWrapper<AudioTrack> tr;
-    try{
-         tr= track.clone();
-    }
-    catch(...){
+    PointerWrapper<AudioTrack> tr = track.clone(); 
+    if (!tr){
         std::cerr<<"[ERROR] Track: \""<<track.get_title()<<"\" failed to clone";
         return -1;
     }
-    int target_deck = 1-active_deck;
+    int target_deck;
+    if (!decks[0] && !decks[1]){
+        target_deck = 0;
+    }
+    else{
+        target_deck = 1-active_deck;
+    }
     std::cout<<"[Deck Switch] Target deck: "<< target_deck;
     if (decks[target_deck]){
         delete decks[target_deck];
@@ -54,7 +57,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     tr->analyze_beatgrid();
     if (decks[active_deck] && auto_sync){
         if ((std::abs(tr->get_bpm() - decks[active_deck]->get_bpm()))>bpm_tolerance){
-            //synchronize the BPM on the cloned track
+            sync_bpm(tr);
         }
     }
     AudioTrack* at = tr.release();
@@ -111,5 +114,9 @@ void MixingEngineService::sync_bpm(const PointerWrapper<AudioTrack>& track) cons
     if (!decks[active_deck] || !track){
         return;
     }
-    //implement the rest
+    int deck_bpm= decks[active_deck]->get_bpm();
+    int original_bpm = track->get_bpm();
+    int new_bpm = (deck_bpm + original_bpm) / 2;
+    track->set_bpm(new_bpm);
+    std::cout<<"[Sync BPM] Syncing BPM from " << original_bpm << " to " << new_bpm << std::endl;
 }
