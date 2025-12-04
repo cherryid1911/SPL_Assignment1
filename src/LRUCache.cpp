@@ -26,7 +26,7 @@ bool LRUCache::put(PointerWrapper<AudioTrack> track) {
         if (all_occupied){
             all_occupied=slots[i].isOccupied();
         }
-        if (slots[i].getTrack()->get_title()==track->get_title()){
+        if (slots[i].isOccupied() && slots[i].getTrack()->get_title()==track->get_title()){
             slots[i].access(++access_counter);
             return false;
         }

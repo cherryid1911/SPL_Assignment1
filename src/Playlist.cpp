@@ -24,6 +24,7 @@ Playlist::~Playlist() {
     #endif
 }
 
+// Copy constructor
 Playlist::Playlist(const Playlist& other)
     : head(nullptr), playlist_name(other.playlist_name), track_count(0){
     PlaylistNode *prev =nullptr, *curr = other.head;
@@ -45,6 +46,7 @@ Playlist::Playlist(const Playlist& other)
     }
 }
 
+// Copy assignment operator
 Playlist& Playlist::operator=(const Playlist& other){
     if (this==&other){
         return *this;

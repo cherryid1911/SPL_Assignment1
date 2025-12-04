@@ -23,17 +23,18 @@ void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>&
           if(info.type == "MP3"){
             MP3Track *track = new MP3Track(info.title, info.artists, info.duration_seconds, info.bpm, info.extra_param1, info.extra_param2);
             library.push_back(track);
-            std::cerr << "MP3Track created:" << (*track).get_bitrate() << "kbps\n";
+            std::cerr << "MP3Track created: " << (*track).get_bitrate() << " kbps\n";
+            count_tracks++;
         }
 
          else if (info.type == "WAV") {
             WAVTrack* track = new WAVTrack(info.title, info.artists, info.duration_seconds, info.bpm, info.extra_param1, info.extra_param2);
             library.push_back(track);
-            std::cerr << "WAVTrack created:" << (*track).get_sample_rate() << "Hz/" << (*track).get_bit_depth() << "bit\n";
+            std::cerr << "WAVTrack created: " << (*track).get_sample_rate() << " Hz/ " << (*track).get_bit_depth() << " bit\n";
+            count_tracks++;
         }
-        count_tracks++;
     }
-    std::cerr << "Log summary: [INFO] Track library built:" << count_tracks << "tracks loaded\n";
+    std::cerr << "Log summary: [INFO] Track library built: " << count_tracks << " tracks loaded\n";
 }
 
 /**
