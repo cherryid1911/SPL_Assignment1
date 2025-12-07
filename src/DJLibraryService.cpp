@@ -16,25 +16,24 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
     //Todo: Implement buildLibrary method
 
-    //my changes
     int count_tracks=0;
      for (const auto& info : library_tracks) {
        
-          if(info.type == "MP3"){
+        if(info.type == "MP3"){
             MP3Track *track = new MP3Track(info.title, info.artists, info.duration_seconds, info.bpm, info.extra_param1, info.extra_param2);
             library.push_back(track);
-            std::cerr << "MP3Track created: " << (*track).get_bitrate() << " kbps\n";
+            //std::cout << "MP3Track created: " << (*track).get_bitrate() << " kbps\n";
             count_tracks++;
         }
 
-         else if (info.type == "WAV") {
+        else if (info.type == "WAV") {
             WAVTrack* track = new WAVTrack(info.title, info.artists, info.duration_seconds, info.bpm, info.extra_param1, info.extra_param2);
             library.push_back(track);
-            std::cerr << "WAVTrack created: " << (*track).get_sample_rate() << " Hz/ " << (*track).get_bit_depth() << " bit\n";
+            //std::cout << "WAVTrack created: " << (*track).get_sample_rate() << " Hz/ " << (*track).get_bit_depth() << " bit\n";
             count_tracks++;
         }
     }
-    std::cerr << "Log summary: [INFO] Track library built: " << count_tracks << " tracks loaded\n";
+    std::cout << "[INFO] Track library built: " << count_tracks << " tracks loaded\n";
 }
 
 /**
@@ -42,18 +41,18 @@ void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>&
  * 
  */
 void DJLibraryService::displayLibrary() const {
-    std::cerr << "=== DJ Library Playlist: " 
+    std::cout << "=== DJ Library Playlist: " 
               << playlist.get_name() << " ===" << std::endl;
 
     if (playlist.is_empty()) {
-        std::cerr << "[INFO] Playlist is empty.\n";
+        std::cout << "[INFO] Playlist is empty.\n";
         return;
     }
 
     // Let Playlist handle printing all track info
     playlist.display();
 
-    std::cerr << "Total duration: " << playlist.get_total_duration() << " seconds" << std::endl;
+    std::cout << "Total duration: " << playlist.get_total_duration() << " seconds" << std::endl;
 }
 
 /**
@@ -85,8 +84,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
     // Your implementation here
     // For now, add a placeholder to fix the linker error
 
-    //my changes
-     std::cerr << "Log: [INFO] Loading playlist: " << playlist_name << ".\n";
+     std::cout << "[INFO] Loading playlist: " << playlist_name << "\n";
      Playlist& playlist = getPlaylist();
      playlist = Playlist(playlist_name);
 
@@ -94,7 +92,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
 
      for (int i : track_indices){
         if (i < 1 || i > library.size())
-             std::cerr << "[WARNING] Invalid track index: " << i << ".\n";
+             std::cout << "[WARNING] Invalid track index: " << i << ".\n";
         else{
             PointerWrapper<AudioTrack> cloneWrapper = library[i-1] -> clone();
 
@@ -107,11 +105,11 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
               clonedTrack->analyze_beatgrid();
               playlist.add_track(clonedTrack);
               counted_tracks++;
-              std::cerr << "Added " << (*clonedTrack).get_title() << " to playlist " << playlist_name << ".\n";
+              //std::cout << "Added " << (*clonedTrack).get_title() << " to playlist " << playlist_name << ".\n";
             }   
         }
      }
-    std::cerr << "[INFO] Playlist loaded: " << playlist_name <<" (<" << counted_tracks << " tracks) .\n";
+    std::cout << "[INFO] Playlist loaded: " << playlist_name <<" (" << counted_tracks << " tracks) .\n";
 
     (void)playlist_name;  // Suppress unused parameter warning
     (void)track_indices;  // Suppress unused parameter warning
@@ -129,7 +127,7 @@ std::vector<std::string> DJLibraryService::getTrackTitles() const {
             track_titles.push_back(track -> get_title());
     }
 
-    return track_titles; // Placeholder
+    return track_titles;
 }
 
 /*

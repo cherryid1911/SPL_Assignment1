@@ -16,6 +16,9 @@ public:
     DJLibraryService(const Playlist& playlist);
     DJLibraryService(): playlist(), library(){}
 
+    // Destructor
+    ~DJLibraryService();
+
     // Copy ctor - deleted
     DJLibraryService(const DJLibraryService&) = delete;
 
@@ -55,10 +58,6 @@ public:
      * @return A vector of strings containing the track titles.
      */
     std::vector<std::string> getTrackTitles() const;
-
-    //my changes - destructor
-
-    ~DJLibraryService();
 
 private:
     Playlist playlist;

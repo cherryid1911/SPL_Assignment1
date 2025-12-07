@@ -10,8 +10,9 @@ DJControllerService::DJControllerService(size_t cache_size)
  * TODO: Implement loadTrackToCache method
  */
 int DJControllerService::loadTrackToCache(AudioTrack& track) {
-    if (cache.contains(track.get_title())){
-        cache.get(track.get_title());
+    std::string tr_title= track.get_title();
+    if (cache.contains(tr_title)){
+        cache.get(tr_title);
         return 1;
     }
     PointerWrapper<AudioTrack> cloned = track.clone();
