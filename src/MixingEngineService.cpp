@@ -38,7 +38,8 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     }
     int target_deck;
     int prev = active_deck;
-    if (!decks[0] && !decks[1]){
+    bool had_any=(decks[0] != nullptr) || (decks[1] != nullptr);
+    if ((!had_any)){
         target_deck = 0;
     }
     else{
@@ -52,7 +53,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     tr->load();
     tr->analyze_beatgrid();
     
-    if (decks[prev] && auto_sync){
+    if (had_any && decks[prev] && auto_sync){
         int diff = std::abs(tr->get_bpm() - decks[active_deck]->get_bpm());
         if (diff>bpm_tolerance){
             sync_bpm(tr);
@@ -60,9 +61,9 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     }
     AudioTrack* at = tr.release();
     decks[target_deck]= at;
-    std::cout<<"[Load Complete] \"" <<at->get_title() 
-                <<"\" is now loaded on deck " << target_deck<< "\n";
-    if (decks[prev] && prev!=active_deck){
+    std::cout<<"[Load Complete] '" <<at->get_title() 
+                <<"' is now loaded on deck " << target_deck<< "\n";
+    if (had_any && decks[prev] && prev!=target_deck){
         std::cout<<"[Unload] Unloading previous deck "<<
             prev<< "("<<decks[prev]->get_title()<<")\n";
         delete decks[prev];
