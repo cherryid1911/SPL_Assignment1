@@ -90,7 +90,8 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
 
     int counted_tracks = 0;
 
-     for (int i : track_indices){
+     for (int i: track_indices){
+        //int i = track_indices[k];
         if (i < 1 || i > library.size())
              std::cout << "[WARNING] Invalid track index: " << i << ".\n";
         else{
@@ -122,11 +123,11 @@ std::vector<std::string> DJLibraryService::getTrackTitles() const {
     // Your implementation here
     std::vector<std::string> track_titles;
     std::vector<AudioTrack*> tracks = playlist.getTracks();
-    for (auto* track : tracks) {
+    for (auto it = tracks.rbegin(); it != tracks.rend(); ++it) {
+        AudioTrack* track = *it;
         if (track)
             track_titles.push_back(track -> get_title());
     }
-
     return track_titles;
 }
 
