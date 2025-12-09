@@ -110,7 +110,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
             }   
         }
      }
-    std::cout << "[INFO] Playlist loaded: " << playlist_name <<" (" << counted_tracks << " tracks) .\n";
+    std::cout << "[INFO] Playlist loaded: " << playlist_name <<" (" << counted_tracks << " tracks)\n";
 
     (void)playlist_name;  // Suppress unused parameter warning
     (void)track_indices;  // Suppress unused parameter warning
