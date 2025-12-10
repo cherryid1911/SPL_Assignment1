@@ -66,6 +66,12 @@ public:
      */
     ~DJSession();
 
+    // Copy ctor - deleted
+    DJSession(const DJSession&) = delete;
+
+    // Copy assignment operator - deleted
+    DJSession& operator=(const DJSession&) = delete;
+
     // ========== ORCHESTRATION METHODS ==========
 
 
